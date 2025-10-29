@@ -9,8 +9,6 @@ import {
   FaNodeJs,
   FaDatabase,
   FaGitAlt,
-  FaDocker,
-  FaPython,
 } from "react-icons/fa";
 import { SiExpress, SiNextdotjs, SiPostgresql, SiPrisma } from "react-icons/si";
 import { motion } from "framer-motion";

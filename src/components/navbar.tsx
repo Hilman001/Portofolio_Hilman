@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import Contact from "@/app/contact/page";
 import Profile from "@/app/about/page";
@@ -13,17 +14,19 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
-  // Ganti warna link aktif saat scroll
+  // Ubah warna link aktif saat scroll
   useEffect(() => {
     const handleScroll = () => {
       const sections = document.querySelectorAll("section");
       let current = "";
       sections.forEach((section) => {
         const sectionTop = section.offsetTop - 80;
-        if (window.scrollY >= sectionTop) current = section.getAttribute("id")!;
+        if (window.scrollY >= sectionTop)
+          current = section.getAttribute("id") || "";
       });
       setActiveSection(current);
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -55,13 +58,27 @@ export default function Navbar() {
 
           {/* Navigasi Desktop */}
           <ul className="hidden md:flex space-x-8 text-gray-700 font-medium">
-            <NavItem href="#hero" active={activeSection}>Home</NavItem>
-            <NavItem href="#about" active={activeSection}>About</NavItem>
-            <NavItem href="#skill" active={activeSection}>Skill</NavItem>
-            <NavItem href="#portofolio" active={activeSection}>Portofolio</NavItem>
-            <NavItem href="#experience" active={activeSection}>Experience</NavItem>
-            <NavItem href="#testimoni" active={activeSection}>Testimoni</NavItem>
-            <NavItem href="#contact" active={activeSection}>Contact</NavItem>
+            <NavItem href="#hero" active={activeSection}>
+              Home
+            </NavItem>
+            <NavItem href="#about" active={activeSection}>
+              About
+            </NavItem>
+            <NavItem href="#skill" active={activeSection}>
+              Skill
+            </NavItem>
+            <NavItem href="#portofolio" active={activeSection}>
+              Portofolio
+            </NavItem>
+            <NavItem href="#experience" active={activeSection}>
+              Experience
+            </NavItem>
+            <NavItem href="#testimoni" active={activeSection}>
+              Testimoni
+            </NavItem>
+            <NavItem href="#contact" active={activeSection}>
+              Contact
+            </NavItem>
           </ul>
         </div>
 
@@ -69,13 +86,55 @@ export default function Navbar() {
         {isOpen && (
           <div className="md:hidden bg-white shadow-lg border-t border-gray-100">
             <ul className="flex flex-col items-center py-4 space-y-4 text-gray-700 font-medium">
-              <NavItem href="#hero" active={activeSection} onClick={() => setIsOpen(false)}>Home</NavItem>
-              <NavItem href="#about" active={activeSection} onClick={() => setIsOpen(false)}>About</NavItem>
-              <NavItem href="#skill" active={activeSection} onClick={() => setIsOpen(false)}>Skill</NavItem>
-              <NavItem href="#portofolio" active={activeSection} onClick={() => setIsOpen(false)}>Portofolio</NavItem>
-              <NavItem href="#experience" active={activeSection} onClick={() => setIsOpen(false)}>Experience</NavItem>
-              <NavItem href="#testimoni" active={activeSection} onClick={() => setIsOpen(false)}>Testimoni</NavItem>
-              <NavItem href="#contact" active={activeSection} onClick={() => setIsOpen(false)}>Contact</NavItem>
+              <NavItem
+                href="#hero"
+                active={activeSection}
+                onClick={() => setIsOpen(false)}
+              >
+                Home
+              </NavItem>
+              <NavItem
+                href="#about"
+                active={activeSection}
+                onClick={() => setIsOpen(false)}
+              >
+                About
+              </NavItem>
+              <NavItem
+                href="#skill"
+                active={activeSection}
+                onClick={() => setIsOpen(false)}
+              >
+                Skill
+              </NavItem>
+              <NavItem
+                href="#portofolio"
+                active={activeSection}
+                onClick={() => setIsOpen(false)}
+              >
+                Portofolio
+              </NavItem>
+              <NavItem
+                href="#experience"
+                active={activeSection}
+                onClick={() => setIsOpen(false)}
+              >
+                Experience
+              </NavItem>
+              <NavItem
+                href="#testimoni"
+                active={activeSection}
+                onClick={() => setIsOpen(false)}
+              >
+                Testimoni
+              </NavItem>
+              <NavItem
+                href="#contact"
+                active={activeSection}
+                onClick={() => setIsOpen(false)}
+              >
+                Contact
+              </NavItem>
             </ul>
           </div>
         )}
@@ -83,20 +142,43 @@ export default function Navbar() {
 
       {/* Konten Halaman */}
       <main className="pt-[70px] space-y-20">
-        <Section id="hero"><Home /></Section>
-        <Section id="about"><Profile /></Section>
-        <Section id="skill"><Skill /></Section>
-        <Section id="portofolio"><Portofolio /></Section>
-        <Section id="experience"><Experience /></Section>
-        <Section id="testimoni"><Testimoni /></Section>
-        <Section id="contact"><Contact /></Section>
+        <Section id="hero">
+          <Home />
+        </Section>
+        <Section id="about">
+          <Profile />
+        </Section>
+        <Section id="skill">
+          <Skill />
+        </Section>
+        <Section id="portofolio">
+          <Portofolio />
+        </Section>
+        <Section id="experience">
+          <Experience />
+        </Section>
+        <Section id="testimoni">
+          <Testimoni />
+        </Section>
+        <Section id="contact">
+          <Contact />
+        </Section>
       </main>
     </>
   );
 }
 
-// Komponen Link Navigasi
-function NavItem({ href, active, children, onClick }: any) {
+/* ===============================
+   🔹 Komponen Navigasi Link
+================================ */
+type NavItemProps = {
+  href: string;
+  active: string;
+  children: React.ReactNode;
+  onClick?: () => void;
+};
+
+function NavItem({ href, active, children, onClick }: NavItemProps) {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
@@ -122,10 +204,20 @@ function NavItem({ href, active, children, onClick }: any) {
   );
 }
 
-// Komponen Section Halaman
-function Section({ id, children }: { id: string; children: React.ReactNode }) {
+/* ===============================
+   🔹 Komponen Section Halaman
+================================ */
+type SectionProps = {
+  id: string;
+  children: React.ReactNode;
+};
+
+function Section({ id, children }: SectionProps) {
   return (
-    <section id={id} className="min-h-screen flex flex-col justify-center bg-gray-50">
+    <section
+      id={id}
+      className="min-h-screen flex flex-col justify-center bg-gray-50"
+    >
       {children}
     </section>
   );

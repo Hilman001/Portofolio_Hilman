@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { strong } from "motion/react-client";
+
 
 export default function Portfolio() {
   return (
